@@ -21,6 +21,7 @@
                       http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
   version="4.0"
   metadata-complete="false">
+  <!-- 어노테이션으로 서블릿 매핑하기 위해 false 설정함 -->
 
 <!--   <servlet>
     <servlet-name>na</servlet-name>
@@ -31,6 +32,7 @@
     <servlet-name>na</servlet-name>
     <url-pattern>/hello</url-pattern>
   </servlet-mapping> -->
+  
   
 <!-- 	<filter>
 		<filter-name>characterEncodingFilter</filter-name>

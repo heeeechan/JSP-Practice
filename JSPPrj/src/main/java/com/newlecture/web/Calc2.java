@@ -15,6 +15,7 @@ public class Calc2 extends HttpServlet {
 
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		// 어플리케이션 객체 생성
 		ServletContext application = request.getServletContext();
 		HttpSession session = request.getSession();
 
@@ -25,7 +26,6 @@ public class Calc2 extends HttpServlet {
 		String op = request.getParameter("operator");
 
 		int v = 0;
-
 		if (!v_.equals("")) {
 			v = Integer.parseInt(v_);
 		}
