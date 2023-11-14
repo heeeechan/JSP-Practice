@@ -25,7 +25,7 @@ public class NoticeListController extends HttpServlet {
 		// 모델이 목록이기 때문에 List 객체 사용
 		List<Notice> list = new ArrayList<>();
 		
-				String url = "jdbc:oracle:thin:@localhost:1521/xepdb1";
+		String url = "jdbc:oracle:thin:@localhost:1521/xepdb1";
 		String sql = "SELECT * FROM NOTICE";
 
 		try {

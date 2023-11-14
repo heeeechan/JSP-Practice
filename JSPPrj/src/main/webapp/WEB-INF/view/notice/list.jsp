@@ -179,9 +179,10 @@
 					for(Notice n : list) {
 					  pageContext.setAttribute("n", n);
 					%> --%>
+					<!-- 위 코드 역할을 forEach가 함 -->
 					<c:forEach var="n" items="${list}">
 					<tr>
-						<td>${n.id}</td>
+						<td> ${n.id}</td>
 						<td class="title indent text-align-left"><a href="detail?id=${n.id}">${n.title}</a></td>
 						<td>${n.writerId}</td>
 						<td>${n.regDate}</td>
@@ -208,8 +209,9 @@
 		
 	</div>
 	<ul class="-list- center">
-		<li><a class="-text- orange bold" href="?p=1&t=&q=" >1</a></li>
-				
+		<c:forEach var="i" begin="0" end="4">
+			<li><a class="-text- orange bold" href="?p=${1 + i}&t=&q=" >${1 + i}</a></li>
+		</c:forEach>	
 	</ul>
 	<div>
 		
