@@ -21,19 +21,46 @@ public class NoticeService {
 	public int pubNoticeAll(int[] ids){
 		return 0;
 	}
-	public int insertNotice(Notice notice){
-		return 0;
+
+	public int insertNotice(Notice notice) {
+
+		int result = 0;
+		// 오라클에서 ID 자동으로 들어가는 시퀀스 설정해둠
+		String sql = "INSERT INTO NOTICE (TITLE, CONTENT, WRITER_ID, PUB) VALUES(?, ?, ?, ?)";
+		String url = "jdbc:oracle:thin:@localhost:1521/xepdb1";
+
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			Connection con = DriverManager.getConnection(url, "test", "720044");
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setString(1, notice.getTitle());
+			st.setString(2, notice.getContent());
+			st.setString(3, notice.getWriterId());
+			st.setBoolean(4, notice.getPub());
+
+			result = st.executeUpdate();
+
+			st.close();
+			con.close();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
+	
 	public int deleteNotice(int id){
 		return 0;
 	}
+	
 	public int updateNotice(Notice notice){
 		return 0;
 	}
+	
 	public List<Notice> getNoticeNewestList(){
 		return null;
 	}
-	
 	
 	// notice 페이지를 위한 서비스
 	// 이름이 같은 함수는 기능이 같은 함수임 - 파라미터가 제일 많은 걸 구현해야 다른 것들도 사용
@@ -63,7 +90,7 @@ public class NoticeService {
 
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
-			Connection con = DriverManager.getConnection(url, "TEST", "720044");
+			Connection con = DriverManager.getConnection(url, "test", "720044");
 			// 물음표가 포함된 쿼리문 - sql을 먼저 받아서 처리
 			PreparedStatement st = con.prepareStatement(sql);
 			// 몇번째 물음표에 어떤 값을 넣을건지
@@ -81,8 +108,9 @@ public class NoticeService {
 			  String files = rs.getString("FILES");
 			  // String content = rs.getString("CONTENT");
 			  int cmtCount = rs.getInt("CMT_COUNT");
+			  boolean pub = rs.getBoolean("PUB");
 			  
-			  NoticeView notice = new NoticeView(id, title, writerId, regDate, hit, files, cmtCount);
+			  NoticeView notice = new NoticeView(id, title, writerId, regDate, hit, files, pub, cmtCount);
 			  // while문 돌면서 객체 만들때마다 담아줌
 			  list.add(notice);
 			}
@@ -116,7 +144,7 @@ public class NoticeService {
 		
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
-			Connection con = DriverManager.getConnection(url, "TEST", "720044");
+			Connection con = DriverManager.getConnection(url, "test", "720044");
 			// 물음표가 포함된 쿼리문 - sql을 먼저 받아서 처리
 			PreparedStatement st = con.prepareStatement(sql);
 			// 몇번째 물음표에 어떤 값을 넣을건지
@@ -148,7 +176,7 @@ public class NoticeService {
 
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
-			Connection con = DriverManager.getConnection(url, "TEST", "720044");
+			Connection con = DriverManager.getConnection(url, "test", "720044");
 			// 물음표가 포함된 쿼리문 - sql을 먼저 받아서 처리
 			PreparedStatement st = con.prepareStatement(sql);
 			// 몇번째 물음표에 어떤 값을 넣을건지
@@ -163,8 +191,9 @@ public class NoticeService {
 				String hit = rs.getString("HIT");
 				String files = rs.getString("FILES");
 				String content = rs.getString("CONTENT");
+				boolean pub = rs.getBoolean("PUB");
 
-				notice = new Notice(nid, title, writerId, regDate, hit, files, content);
+				notice = new Notice(nid, title, writerId, regDate, hit, files, content, pub);
 			}
 
 			rs.close();
@@ -193,7 +222,7 @@ public class NoticeService {
 
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
-			Connection con = DriverManager.getConnection(url, "TEST", "720044");
+			Connection con = DriverManager.getConnection(url, "test", "720044");
 			// 물음표가 포함된 쿼리문 - sql을 먼저 받아서 처리
 			PreparedStatement st = con.prepareStatement(sql);
 			// 몇번째 물음표에 어떤 값을 넣을건지
@@ -208,8 +237,9 @@ public class NoticeService {
 				String hit = rs.getString("HIT");
 				String files = rs.getString("FILES");
 				String content = rs.getString("CONTENT");
+				boolean pub = rs.getBoolean("PUB");
 
-				notice = new Notice(nid, title, writerId, regDate, hit, files, content);
+				notice = new Notice(nid, title, writerId, regDate, hit, files, content, pub);
 			}
 
 			rs.close();
@@ -235,7 +265,7 @@ public class NoticeService {
 
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
-			Connection con = DriverManager.getConnection(url, "TEST", "720044");
+			Connection con = DriverManager.getConnection(url, "test", "720044");
 			// 물음표가 포함된 쿼리문 - sql을 먼저 받아서 처리
 			PreparedStatement st = con.prepareStatement(sql);
 			// 몇번째 물음표에 어떤 값을 넣을건지
@@ -250,8 +280,9 @@ public class NoticeService {
 				String hit = rs.getString("HIT");
 				String files = rs.getString("FILES");
 				String content = rs.getString("CONTENT");
+				boolean pub = rs.getBoolean("PUB");
 
-				notice = new Notice(nid, title, writerId, regDate, hit, files, content);
+				notice = new Notice(nid, title, writerId, regDate, hit, files, content, pub);
 			}
 
 			rs.close();
@@ -285,7 +316,7 @@ public class NoticeService {
 
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
-			Connection con = DriverManager.getConnection(url, "TEST", "720044");
+			Connection con = DriverManager.getConnection(url, "test", "720044");
 			Statement st = con.createStatement();
 			
 			result = st.executeUpdate(sql);
