@@ -1,1 +1,1 @@
-# JSP-Practice
+# JSP-Servlet Practice
