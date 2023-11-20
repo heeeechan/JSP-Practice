@@ -69,8 +69,6 @@
                         <ul>
                             <li><a href="/index.html">HOME</a></li>
 
-
-
                             <li>
                                 <form action="/logout" method="post">
                                     <input type="hidden" name="" value="" />
@@ -174,7 +172,7 @@
                                 <th>첨부파일</th>
                                 <td colspan="3">
 	                                <c:forTokens var="fileName" items="${notice.files}" delims="," varStatus="st">
-								                    <a href="${fileName}">${fileName}</a>
+								                    <a href="/upload/${fileName}">${fileName}</a>
 								                    <c:if test="${!st.last}">
 								                    /
 								                    </c:if>

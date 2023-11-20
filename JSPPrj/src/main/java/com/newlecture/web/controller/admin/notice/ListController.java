@@ -1,6 +1,8 @@
 package com.newlecture.web.controller.admin.notice;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -21,23 +23,39 @@ public class ListController extends HttpServlet {
 		String[] openIds = request.getParameterValues("open-id");
 		String[] delIds = request.getParameterValues("del-id");
 		String cmd = request.getParameter("cmd");
+		// 게시글 id들
+		String ids_ = request.getParameter("ids");
+		String[] ids = ids_.trim().split(" ");
+		
+		NoticeService service = new NoticeService();
 		
 		switch (cmd) {
 		case "일괄공개":
 			for(String openId : openIds) {
 				System.out.printf("open id : %s\n", openId);
 			}
+			// 배열을 리스트로 바꿈
+			List<String> oids = Arrays.asList(openIds);
+			// 전체목록에서 오픈id들을 빼서 안보여줄 id들만 얻음
+			List<String> cids = new ArrayList(Arrays.asList(ids)); // id들 리스트로 얻어서 변수에 담아줌
+			cids.removeAll(oids);
+			System.out.println(Arrays.asList(ids));
+			System.out.println(oids);
+			System.out.println(cids);
+			
+			// Transaction(업무적단위, 논리적단위)
+			// open과 close를 하나의 함수로 수행되게끔
+			service.pubNoticeAll(oids, cids);
 			break;
 
 		case "일괄삭제":
-			NoticeService service = new NoticeService();
 			// delIds를 정수형 배열로 바꿔야함
-			int[] ids = new int[delIds.length];
+			int[] ids1 = new int[delIds.length];
 			for (int i = 0; i < delIds.length; i++) {
-				ids[i] = Integer.parseInt(delIds[i]);
+				ids1[i] = Integer.parseInt(delIds[i]);
 			}
 			// 삭제 된 개수 반환하도록
-			int result = service.deleteNoticeAll(ids);
+			int result = service.deleteNoticeAll(ids1);
 			break;
 		}
 		

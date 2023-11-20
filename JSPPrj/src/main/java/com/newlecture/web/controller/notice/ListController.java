@@ -41,7 +41,7 @@ public class ListController extends HttpServlet {
 		
 		// 모델이 목록이기 때문에 List 객체 사용
 		NoticeService service = new NoticeService();
-		List<NoticeView> list = service.getNoticeList(field, query, page);
+		List<NoticeView> list = service.getNoticePubList(field, query, page);
 		
 		// 마지막 페이지를 보여주기 위해 총 레코드 수 가져오는 로직
 		int count = service.getNoticeCount(field, query);
